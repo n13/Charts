@@ -83,6 +83,13 @@ open class AxisRendererBase: Renderer
             }
         }
         
+        if min == Double.nan || max == Double.nan {
+            print("min nan \(min) max: \(max)")
+            print("LEFT T \(viewPortHandler.contentLeft) max: \(viewPortHandler.contentTop)")
+            print("min nan \(viewPortHandler.contentLeft) max: \(viewPortHandler.contentBottom)")
+            fatalError("axis data corrupt")
+        }
+        
         computeAxisValues(min: min, max: max)
     }
     
