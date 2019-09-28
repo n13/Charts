@@ -62,7 +62,7 @@ open class BarLineScatterCandleBubbleRenderer: DataRenderer
         }
         
         public init(chart: BarLineScatterCandleBubbleChartDataProvider,
-                    dataSet: IBarLineScatterCandleBubbleChartDataSet,
+                    dataSet: IChartDataSet,
                     animator: Animator?)
         {
             self.set(chart: chart, dataSet: dataSet, animator: animator)
@@ -70,7 +70,7 @@ open class BarLineScatterCandleBubbleRenderer: DataRenderer
         
         /// Calculates the minimum and maximum x values as well as the range between them.
         open func set(chart: BarLineScatterCandleBubbleChartDataProvider,
-                      dataSet: IBarLineScatterCandleBubbleChartDataSet,
+                      dataSet: IChartDataSet,
                       animator: Animator?)
         {
             let phaseX = Swift.max(0.0, Swift.min(1.0, animator?.phaseX ?? 1.0))
