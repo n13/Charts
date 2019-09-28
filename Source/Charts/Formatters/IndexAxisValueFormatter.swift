@@ -53,7 +53,15 @@ open class IndexAxisValueFormatter: NSObject, IAxisValueFormatter
                              axis: AxisBase?) -> String
     {
         let index = Int(value.rounded())
-        guard values.indices.contains(index), index == Int(value) else { return "" }
+        guard values.indices.contains(index), index == Int(value) else { 
+            // TODO this still happens at the -1 and last index + 1
+            //print("no value for value: \(value)")
+//            print("rounded \(value.rounded())")
+//            print("index: \(index)")
+//            print("int of val: \(Int(value))")
+            return "" 
+            
+        }
         return _values[index]
     }
 }
