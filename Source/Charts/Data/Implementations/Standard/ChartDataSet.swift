@@ -72,7 +72,12 @@ open class ChartDataSet: ChartBaseDataSet
         self.entries = entries
         notifyDataSetChanged()
     }
-
+    
+    public func replaceEntry(at index: Int, with entry: ChartDataEntry) {
+        self.entries.replaceSubrange(index...index, with: [entry])
+        notifyDataSetChanged()
+    }
+    
     /// maximum y-value in the value array
     internal var _yMax: Double = -Double.greatestFiniteMagnitude
     
