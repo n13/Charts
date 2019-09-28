@@ -60,11 +60,11 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     
     /// The left y-axis object. In the horizontal bar-chart, this is the
     /// top axis.
-    @objc open internal(set) var leftAxis = YAxis(position: .left)
+    @objc open var leftAxis = YAxis(position: .left)
     
     /// The right y-axis object. In the horizontal bar-chart, this is the
     /// bottom axis.
-    @objc open internal(set) var rightAxis = YAxis(position: .right)
+    @objc open var rightAxis = YAxis(position: .right)
 
     /// The left Y axis renderer. This is a read-write property so you can set your own custom renderer here.
     /// **default**: An instance of YAxisRenderer
@@ -1001,8 +1001,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     /// Zooms out to original size.
     @objc open func resetZoom()
     {
-        let matrix = _viewPortHandler.resetZoom()
-        _viewPortHandler.refresh(newMatrix: matrix, chart: self, invalidate: false)
+        //let matrix = _viewPortHandler.resetZoom()
+        _viewPortHandler.refresh(newMatrix: .identity, chart: self, invalidate: false)
         
         // Range might have changed, which means that Y-axis labels could have changed in size, affecting Y-axis size. So we need to recalculate offsets.
         calculateOffsets()
@@ -1912,6 +1912,23 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
         {
             return _rightAxisTransformer
         }
+    }
+    
+    open func setTransformer(forAxis axis: YAxis.AxisDependency, transformer: Transformer)
+    {
+        if axis == .left
+        {
+            _leftAxisTransformer = transformer
+        }
+        else
+        {
+            return _rightAxisTransformer = transformer
+        }
+        
+        // TODO - see what we need to change to make this work
+        calculateOffsets()
+        setNeedsDisplay()
+
     }
     
     /// the number of maximum visible drawn values on the chart only active when `drawValuesEnabled` is enabled
