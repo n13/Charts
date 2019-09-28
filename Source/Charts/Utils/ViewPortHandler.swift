@@ -50,7 +50,8 @@ open class ViewPortHandler: NSObject
     private var _transY = CGFloat(0.0)
     
     /// offset that allows the chart to be dragged over its bounds on the x-axis
-    private var _transOffsetX = CGFloat(0.0)
+    private var _transOffsetXLeft = CGFloat(0.0)
+    private var _transOffsetXRight = CGFloat(0.0)
     
     /// offset that allows the chart to be dragged over its bounds on the x-axis
     private var _transOffsetY = CGFloat(0.0)
@@ -287,7 +288,7 @@ open class ViewPortHandler: NSObject
         }
         
         let maxTransX = -width * (_scaleX - 1.0)
-        _transX = min(max(matrix.tx, maxTransX - _transOffsetX), _transOffsetX)
+        _transX = min(max(matrix.tx, maxTransX - _transOffsetXRight), _transOffsetXLeft)
         
         let maxTransY = height * (_scaleY - 1.0)
         _transY = max(min(matrix.ty, maxTransY + _transOffsetY), -_transOffsetY)
@@ -512,7 +513,18 @@ open class ViewPortHandler: NSObject
     /// Set an offset in pixels that allows the user to drag the chart over it's bounds on the x-axis.
     @objc open func setDragOffsetX(_ offset: CGFloat)
     {
-        _transOffsetX = offset
+        _transOffsetXLeft = offset
+        _transOffsetXRight = offset
+    }
+
+    @objc open func setDragOffsetXLeft(_ offset: CGFloat)
+    {
+        _transOffsetXLeft = offset
+    }
+
+    @objc open func setDragOffsetXRight(_ offset: CGFloat)
+    {
+        _transOffsetXRight = offset
     }
     
     /// Set an offset in pixels that allows the user to drag the chart over it's bounds on the y-axis.
@@ -524,7 +536,7 @@ open class ViewPortHandler: NSObject
     /// `true` if both drag offsets (x and y) are zero or smaller.
     @objc open var hasNoDragOffset: Bool
     {
-        return _transOffsetX <= 0.0 && _transOffsetY <= 0.0
+        return _transOffsetXLeft <= 0.0 && _transOffsetXRight <= 0.0 && _transOffsetY <= 0.0
     }
     
     /// `true` if the chart is not yet fully zoomed out on the x-axis
