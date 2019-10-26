@@ -87,7 +87,7 @@ open class Transformer: NSObject
     {
         r = r.applying(valueToPixelMatrix)
     }
-    
+        
     /// Transform a rectangle with all matrices with potential animation phases.
     open func rectValueToPixel(_ r: inout CGRect, phaseY: Double)
     {
@@ -137,6 +137,12 @@ open class Transformer: NSObject
     open func pixelToValues(_ pixel: inout CGPoint)
     {
         pixel = pixel.applying(pixelToValueMatrix)
+    }
+    
+    /// Transforms the given touch point (pixels) into a value on the chart.
+    open func valueForPixels(_ rect: CGRect) -> CGRect
+    {
+        return rect.applying(pixelToValueMatrix)
     }
     
     /// - Returns: The x and y values in the chart at the given touch point
